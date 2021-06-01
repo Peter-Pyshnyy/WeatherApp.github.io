@@ -1,0 +1,173 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,900");
+
+* {
+  margin: 0;
+  padding: 0%;
+  box-sizing: border-box;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.weather-app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 700px;
+}
+
+.weather-card {
+  width: 600px;
+  height: 436px;
+  border: 1px solid #000000;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  height: 45px;
+  border: none;
+  border-bottom: 1px solid #000000;
+  font-size: 18px;
+  line-height: 21px;
+  padding-left: 16px;
+  color: #696969;
+
+  background-image: url(/img/search-icon.png);
+  background-size: 3.5%;
+  background-repeat: no-repeat;
+  background-position: 560px 10px;
+}
+
+input:focus {
+  outline: none;
+  background-color: rgb(250, 250, 250);
+}
+
+.card-body {
+  display: flex;
+  width: 600px;
+}
+
+.card-body .left {
+  width: 100%;
+  height: 390px;
+  max-width: 50%;
+  border-right: 1px solid #000000;
+}
+
+.card-body .right {
+  width: 50%;
+}
+
+.weather-now {
+  display: none;
+  flex-direction: column;
+  height: 345px;
+  position: relative;
+  border-bottom: 1px solid black;
+}
+
+.weather-now .temperature {
+  font-size: 70px;
+  margin-left: 23px;
+  margin-top: 20px;
+}
+
+.weather-now .weather-icon {
+  align-self: center;
+  margin: 40px;
+}
+
+.weather-now .city-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin-left: 12px;
+  margin-bottom: 17px;
+  font-size: 24px;
+  word-break: break-all;
+}
+
+.weather-now .add-city {
+  position: absolute;
+  bottom: 0;
+  left: 87%;
+  margin-bottom: 10px;
+}
+
+.weather-details {
+  display: none;
+}
+
+.weather-forecast {
+  display: none;
+}
+
+.active {
+  display: flex;
+}
+
+.left .menu {
+  display: flex;
+  height: 45px;
+  font-size: 18px;
+}
+
+.menu-now {
+  width: 33%;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 45px;
+  border-right: 1px solid black;
+}
+
+.menu-details {
+  width: 33%;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 45px;
+  border-right: 1px solid black;
+}
+.menu-forecast {
+  width: 33%;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 45px;
+}
+
+.menu-active p {
+  background: black;
+  color: white;
+  width: 101%;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 18px;
+  padding-top: 35px;
+}
+
+ul li {
+  margin-bottom: 15px;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.card-body .right .header {
+  border-bottom: 1px solid #000000;
+  height: 64px;
+  position: relative;
+  width: 299px;
+}
+
+.card-body .right .header p {
+  font-size: 24px;
+  line-height: 28px;
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin-left: 18px;
+  margin-bottom: 7px;
+}

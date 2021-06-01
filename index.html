@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="weather-app">
+      <div class="weather-card">
+        <div class="search">
+          <input
+            type="text"
+            id="search"
+            onfocus="this.value =''"
+            onfocusout="if (this.value == '') {this.value ='Sеarch..'}"
+            value="Sеarch.."
+            maxlength="25"
+          />
+        </div>
+
+        <div class="card-body">
+          <div class="left">
+            <div class="weather-now active">
+              <div class="temperature"></div>
+              <div class="weather-icon"></div>
+              <div class="city-name"></div>
+              <div class="add-city">
+                <h1 id="heart">♡</h1>
+              </div>
+            </div>
+            <div class="weather-details"></div>
+            <div class="weather-forecast"></div>
+
+            <div class="menu">
+              <div class="menu-now menu-active"><p>Now</p></div>
+              <div class="menu-details"><p>Details</p></div>
+              <div class="menu-forecast">Forecast</div>
+            </div>
+          </div>
+
+          <div class="right">
+            <div class="header">
+              <p>Added Locations</p>
+            </div>
+            <div class="added-list">
+              <ul id="added-location-list">
+                <li>Svalyava</li>
+                <li>Drachino</li>
+                <li>Schleusingen</li>
+                <li>Dnipro</li>
+                <li>Hildburghausen</li>
+                <li>Suhl</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/scripts.js"></script>
+    <script src="/test.js"></script>
+  </body>
+</html>
