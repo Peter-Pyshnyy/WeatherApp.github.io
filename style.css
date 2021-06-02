@@ -20,7 +20,6 @@
   width: 600px;
   height: 436px;
   border: 1px solid #000000;
-  align-items: center;
 }
 
 input {
@@ -60,7 +59,9 @@ input:focus {
   width: 50%;
 }
 
-.weather-now {
+.weather-now,
+.weather-details,
+.weather-forecast {
   display: none;
   flex-direction: column;
   height: 345px;
@@ -74,8 +75,10 @@ input:focus {
   margin-top: 20px;
 }
 
-.weather-now .weather-icon {
-  align-self: center;
+.weather-now .weather-icon-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 40px;
 }
 
@@ -96,12 +99,20 @@ input:focus {
   margin-bottom: 10px;
 }
 
-.weather-details {
-  display: none;
+.weather-details .city-name {
+  margin-top: 33px;
+  margin-left: 17px;
+  font-size: 24px;
+  word-break: break-all;
 }
 
-.weather-forecast {
-  display: none;
+.details ul {
+  list-style-type: none;
+  overflow: auto;
+  max-height: 242px;
+  max-width: 250px;
+  margin-left: 17px;
+  margin-top: 42px;
 }
 
 .active {
@@ -115,7 +126,7 @@ input:focus {
 }
 
 .menu-now {
-  width: 33%;
+  width: 33.3%;
   text-align: center;
   vertical-align: middle;
   line-height: 45px;
@@ -123,14 +134,14 @@ input:focus {
 }
 
 .menu-details {
-  width: 33%;
+  width: 33.3%;
   text-align: center;
   vertical-align: middle;
   line-height: 45px;
   border-right: 1px solid black;
 }
 .menu-forecast {
-  width: 33%;
+  width: 33.3%;
   text-align: center;
   vertical-align: middle;
   line-height: 45px;
@@ -142,21 +153,34 @@ input:focus {
   width: 101%;
 }
 
-ul {
+.added-list ul {
   list-style-type: none;
-  padding-left: 18px;
-  padding-top: 35px;
+  margin-left: 17px;
+  margin-top: 35px;
+  overflow: auto;
+  max-height: 242px;
+  max-width: 250px;
+}
+
+ul::-webkit-scrollbar {
+  width: 2px;
+  visibility: hidden;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background: #000000;
+  height: 10px;
 }
 
 ul li {
-  margin-bottom: 15px;
+  margin-bottom: 13px;
   font-size: 24px;
   line-height: 28px;
 }
 
 .card-body .right .header {
   border-bottom: 1px solid #000000;
-  height: 64px;
+  height: 68px;
   position: relative;
   width: 299px;
 }
@@ -166,8 +190,10 @@ ul li {
   line-height: 28px;
 
   position: absolute;
-  left: 0;
-  bottom: 0;
+  margin-top: 33px;
   margin-left: 18px;
-  margin-bottom: 7px;
+}
+
+.pointer {
+  cursor: pointer;
 }
