@@ -4,6 +4,15 @@ let addedLocationsList = document.getElementById("added-location-list");
 let currentCity = localStorage.getItem("currentCityKey");
 let addedLocation = new Set();
 
+//getting the information on the city
+function getWeather(cityName) {
+  let key = "8d21e705797d0cfd7ff89a2569d925dd";
+  fetch("http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + key)
+    .then((response) => response.json())
+    .then((result) => drawWeather(result))
+    .catch((err) => console.log(err));
+}
+
 //search
 search.addEventListener("keypress", setQuery);
 function setQuery(e) {
@@ -13,15 +22,6 @@ function setQuery(e) {
     getWeather(currentCity);
     this.blur();
   }
-}
-
-//getting the information on the city
-function getWeather(cityName) {
-  let key = "8d21e705797d0cfd7ff89a2569d925dd";
-  fetch("http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + key)
-    .then((response) => response.json())
-    .then((result) => drawWeather(result))
-    .catch((err) => console.log(err));
 }
 
 //showing the information on the website
@@ -35,30 +35,29 @@ function drawWeather(result) {
 
 //checking for prev. visits
 if (!currentCity) {
-  getWeather("Kyiv");
-} else {
-  getWeather(currentCity);
+  currentCity = "kyiv";
 }
+getWeather(currentCity);
 
 //added locations
 heart.onclick = (e) => {
   if (!localStorage.getItem("addedLocationsKey")) {
     addedLocation.add(currentCity);
     localStorage.setItem("addedLocationsKey", JSON.stringify(...addedLocation));
-  } else {
-    if (Array.isArray(JSON.parse(localStorage.getItem("addedLocationsKey")))) {
-      addedLocation = new Set(JSON.parse(localStorage.getItem("addedLocationsKey"))).add(currentCity);
-    } else {
-      addedLocation = new Set().add(JSON.parse(localStorage.getItem("addedLocationsKey"))).add(currentCity);
-    }
-    localStorage.setItem("addedLocationsKey", JSON.stringify(Array.from(addedLocation)));
+    return;
   }
 
-  //console.log(addedLocation);
-  console.log(localStorage.getItem("addedLocationsKey") + " - local stor");
+  if (Array.isArray(JSON.parse(localStorage.getItem("addedLocationsKey")))) {
+    addedLocation = new Set(JSON.parse(localStorage.getItem("addedLocationsKey"))).add(currentCity);
+    localStorage.setItem("addedLocationsKey", JSON.stringify(Array.from(addedLocation)));
+    return;
+  }
+
+  addedLocation = new Set().add(JSON.parse(localStorage.getItem("addedLocationsKey"))).add(currentCity);
+  localStorage.setItem("addedLocationsKey", JSON.stringify(Array.from(addedLocation)));
 };
 
-localStorage.clear();
+console.log(localStorage.getItem("addedLocationsKey"));
 
 // for (let i = 0; i < addedLocationsList.children.length; i++) {
 //   console.log(addedLocationsList.children[i].innerHTML);
