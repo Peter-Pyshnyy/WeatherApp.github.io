@@ -8,6 +8,20 @@
     <title>Document</title>
   </head>
   <body>
+    <div id="for-item" class="hidden for-item">
+      <div class="for-card">
+        <div class="for-left">
+          <div class="for-day">17 May</div>
+          <div class="for-temp">Temperature: 13</div>
+          <div class="for-feel">Feels like: 10</div>
+        </div>
+        <div class="for-right">
+          <div class="for-time">12:00</div>
+          <div class="for-weather">Rain</div>
+          <img class="for-icon" src="img/Rain.png" alt="Rain" />
+        </div>
+      </div>
+    </div>
     <div class="weather-app">
       <div class="weather-card">
         <div class="search">
@@ -30,7 +44,7 @@
               </div>
               <div class="city-name"></div>
               <div class="add-city pointer">
-                <img id="heart" src="/img/heart.png" alt="added locations" />
+                <img id="heart" src="img/heart.png" alt="added locations" />
               </div>
             </div>
             <div class="weather-details">
@@ -45,7 +59,12 @@
                 </ul>
               </div>
             </div>
-            <div class="weather-forecast"></div>
+            <div class="weather-forecast">
+              <div class="city-name">Akoba</div>
+              <div class="forecast-list">
+                <ul id="forecast-list"></ul>
+              </div>
+            </div>
 
             <div id="menu" class="menu pointer">
               <div class="menu-now menu-active"><p>Now</p></div>
@@ -66,6 +85,6 @@
       </div>
     </div>
 
-    <script src="/scripts.js"></script>
+    <script src="scripts.js"></script>
   </body>
 </html>

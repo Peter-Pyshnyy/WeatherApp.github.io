@@ -1,5 +1,6 @@
 const search = document.getElementById("search");
 const menu = document.getElementById("menu");
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let heart = document.getElementById("heart");
 let addedLocationsList = document.getElementById("added-location-list");
 let currentCity = localStorage.getItem("currentCityKey");
@@ -10,7 +11,7 @@ function getWeatherForecast(cityName) {
   let key = "8d21e705797d0cfd7ff89a2569d925dd";
   fetch("http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + key)
     .then((response) => response.json())
-    .then((result) => handleResult(result))
+    .then((result) => drawForecast(result))
     .catch((err) => console.log(err));
 }
 
@@ -34,10 +35,10 @@ function handleResult(result) {
       search.value = "Search..";
     }, 1000);
   } else {
-    console.log(result);
     currentCity = result.name;
     localStorage.setItem("currentCityKey", currentCity);
     drawWeather(result);
+    getWeatherForecast(currentCity);
   }
 }
 
@@ -62,7 +63,7 @@ function drawWeather(result) {
 
   //now-page
   document.getElementsByClassName("temperature")[0].innerHTML = celsius + "&deg";
-  document.getElementsByClassName("weather-icon")[0].src = `/img/${result.weather[0].main}.png`;
+  document.getElementsByClassName("weather-icon")[0].src = `img/${result.weather[0].main}.png`;
   document.getElementsByClassName("city-name")[0].innerHTML = result.name;
   drawAddedHeart();
 
@@ -73,6 +74,8 @@ function drawWeather(result) {
   document.getElementsByClassName("details-weather")[0].innerHTML = "Weather: " + result.weather[0].main;
   document.getElementsByClassName("details-sunrise")[0].innerHTML = "Sunrise: " + sunriseTime;
   document.getElementsByClassName("details-sunset")[0].innerHTML = "Sunset: " + sunsetTime;
+
+  document.getElementsByClassName("city-name")[2].innerHTML = result.name;
 }
 
 //checking for prev. visits
@@ -131,13 +134,53 @@ function drawList() {
   });
 }
 
+//drawing forecast cards
+function drawForecast(result) {
+  const list = document.getElementById("forecast-list");
+  let arr = [];
+  list.innerHTML = "";
+  for (let i = 0; i < 17; i++) {
+    arr.push(createCard(result, i));
+  }
+
+  console.log(result);
+
+  arr.forEach((forecastTime) => {
+    let li = document.createElement("li");
+    li = forecastTime;
+    list.append(li);
+  });
+}
+
+//create forecast card
+function createCard(result, index) {
+  let card = document.getElementById("for-item").cloneNode(true);
+  let cardLeft = card.childNodes[1].childNodes[1].childNodes;
+  let cardRight = card.childNodes[1].childNodes[3].childNodes;
+  let date = new Date(result.list[index].dt * 1000);
+  let celsius = Math.round(parseFloat(result.list[index].main.temp) - 273.15);
+  let feelsLike = Math.round(parseFloat(result.list[index].main.feels_like) - 273.15);
+
+  cardLeft[1].innerHTML = date.getUTCDate() + " " + monthNames[date.getMonth()];
+  cardLeft[3].innerHTML = `Temperature: ${celsius}&deg`;
+  cardLeft[5].innerHTML = `Feels like: ${feelsLike}&deg`;
+
+  cardRight[1].innerHTML = date.getUTCHours() + ":00";
+  cardRight[3].innerHTML = result.list[index].weather[0].main;
+  cardRight[5].src = `img/${result.list[index].weather[0].main}.png`;
+
+  card.classList.remove("hidden");
+
+  return card;
+}
+
 //heart white-black change
 function drawAddedHeart() {
   let arr = JSON.parse(localStorage.getItem("addedLocationsKey"));
   if (arr.includes(currentCity)) {
-    heart.src = "/img/heart(added).png";
+    heart.src = "img/heart(added).png";
   } else {
-    heart.src = "/img/heart.png";
+    heart.src = "img/heart.png";
   }
 }
 
@@ -184,7 +227,7 @@ menu.onclick = function (e) {
   }
 };
 
-// e.target.parentElement.classList
-
+drawForecast();
 //поміняти set() на array?
+//пофіксити лайв сервер
 //зробити скролл нормальним на всіх браузерах

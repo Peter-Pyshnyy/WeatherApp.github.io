@@ -115,6 +115,24 @@ input:focus {
   margin-top: 42px;
 }
 
+.weather-forecast .city-name {
+  margin-top: 33px;
+  margin-left: 17px;
+  margin-bottom: 5px;
+  font-size: 24px;
+  word-break: break-all;
+}
+
+.forecast-list ul {
+  list-style-type: none;
+  overflow: auto;
+  max-height: 277px;
+}
+
+.forecast-list ul::-webkit-scrollbar {
+  display: none;
+}
+
 .active {
   display: flex;
 }
@@ -162,12 +180,12 @@ input:focus {
   max-width: 250px;
 }
 
-ul::-webkit-scrollbar {
+.added-list ul::-webkit-scrollbar {
   width: 2px;
   visibility: hidden;
 }
 
-ul::-webkit-scrollbar-thumb {
+.added-list ul::-webkit-scrollbar-thumb {
   background: #000000;
   height: 10px;
 }
@@ -196,4 +214,54 @@ ul li {
 
 .pointer {
   cursor: pointer;
+}
+
+.for-item {
+  width: 265px;
+  height: 120px;
+  border: 1px solid black;
+  margin-left: 18px;
+  margin-bottom: 9px;
+}
+
+.for-card {
+  display: flex;
+  flex-direction: row;
+  font-size: 18px;
+  line-height: 21px;
+  align-self: center;
+  padding: 8px 6px 8px 6px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.for-card .for-right {
+  display: flex;
+  flex-direction: column;
+  position: initial;
+  text-align: center;
+  justify-content: center;
+  width: 25%;
+}
+
+.for-card .for-left {
+  width: 70%;
+}
+
+.for-right .for-weather {
+  margin-top: 34px;
+}
+
+.for-right .for-icon {
+  width: 31px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.for-card .for-temp {
+  margin-top: 38px;
+}
+
+.hidden {
+  display: none;
 }
