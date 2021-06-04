@@ -66,6 +66,8 @@ function drawWeather(result) {
   document.getElementsByClassName("weather-icon")[0].src = `img/${result.weather[0].main}.png`;
   document.getElementsByClassName("city-name")[0].innerHTML = result.name;
 
+  getWeatherForecast(result.name);
+
   //details-page
   document.getElementsByClassName("city-name")[1].innerHTML = result.name;
   document.getElementsByClassName("details-temperature")[0].innerHTML = "Temprerature: " + celsius + "&deg";
@@ -75,7 +77,6 @@ function drawWeather(result) {
   document.getElementsByClassName("details-sunset")[0].innerHTML = "Sunset: " + sunsetTime;
   document.getElementsByClassName("city-name")[2].innerHTML = result.name;
 
-  getWeatherForecast(result.name);
   drawAddedHeart();
 }
 
