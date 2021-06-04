@@ -35,7 +35,6 @@ function handleResult(result) {
       search.value = "Search..";
     }, 1000);
   } else {
-    console.log(result);
     currentCity = result.name;
     localStorage.setItem("currentCityKey", currentCity);
     drawWeather(result);
@@ -85,6 +84,7 @@ if (!currentCity) {
 }
 getWeather(currentCity);
 drawList();
+getWeatherForecast(currentCity);
 
 //added locations
 heart.onclick = (e) => {
