@@ -9,7 +9,8 @@ let addedLocation = new Set();
 //getting the forcast information on the city
 function getWeatherForecast(cityName) {
   let key = "8d21e705797d0cfd7ff89a2569d925dd";
-  fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + key)
+  let url = "https://api.openweathermap.org";
+  fetch(url + "/data/2.5/forecast?q=" + cityName + "&appid=" + key)
     .then((response) => response.json())
     .then((result) => drawForecast(result))
     .catch((err) => console.log(err));
@@ -18,7 +19,8 @@ function getWeatherForecast(cityName) {
 //getting current information on the city
 function getWeather(cityName) {
   let key = "8d21e705797d0cfd7ff89a2569d925dd";
-  fetch("https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + key)
+  let url = "https://api.openweathermap.org";
+  fetch(url + "/data/2.5/weather?q=" + cityName + "&appid=" + key)
     .then((response) => response.json())
     .then((result) => handleResult(result))
     .catch((err) => console.log(err));
