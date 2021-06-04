@@ -9,7 +9,7 @@ let addedLocation = new Set();
 //getting the forcast information on the city
 function getWeatherForecast(cityName) {
   let key = "8d21e705797d0cfd7ff89a2569d925dd";
-  fetch("http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + key)
+  fetch("https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + key)
     .then((response) => response.json())
     .then((result) => drawForecast(result))
     .catch((err) => console.log(err));
@@ -65,7 +65,9 @@ function drawWeather(result) {
   document.getElementsByClassName("weather-icon")[0].src = `img/${result.weather[0].main}.png`;
   document.getElementsByClassName("city-name")[0].innerHTML = result.name;
 
+  //forecast-page
   getWeatherForecast(result.name);
+  document.getElementsByClassName("city-name")[2].innerHTML = result.name;
 
   //details-page
   document.getElementsByClassName("city-name")[1].innerHTML = result.name;
@@ -74,7 +76,6 @@ function drawWeather(result) {
   document.getElementsByClassName("details-weather")[0].innerHTML = "Weather: " + result.weather[0].main;
   document.getElementsByClassName("details-sunrise")[0].innerHTML = "Sunrise: " + sunriseTime;
   document.getElementsByClassName("details-sunset")[0].innerHTML = "Sunset: " + sunsetTime;
-  document.getElementsByClassName("city-name")[2].innerHTML = result.name;
 
   drawAddedHeart();
 }
