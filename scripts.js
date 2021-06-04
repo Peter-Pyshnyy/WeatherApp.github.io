@@ -35,10 +35,10 @@ function handleResult(result) {
       search.value = "Search..";
     }, 1000);
   } else {
+    console.log(result);
     currentCity = result.name;
     localStorage.setItem("currentCityKey", currentCity);
     drawWeather(result);
-    getWeatherForecast(currentCity);
   }
 }
 
@@ -65,7 +65,6 @@ function drawWeather(result) {
   document.getElementsByClassName("temperature")[0].innerHTML = celsius + "&deg";
   document.getElementsByClassName("weather-icon")[0].src = `img/${result.weather[0].main}.png`;
   document.getElementsByClassName("city-name")[0].innerHTML = result.name;
-  drawAddedHeart();
 
   //details-page
   document.getElementsByClassName("city-name")[1].innerHTML = result.name;
@@ -74,8 +73,10 @@ function drawWeather(result) {
   document.getElementsByClassName("details-weather")[0].innerHTML = "Weather: " + result.weather[0].main;
   document.getElementsByClassName("details-sunrise")[0].innerHTML = "Sunrise: " + sunriseTime;
   document.getElementsByClassName("details-sunset")[0].innerHTML = "Sunset: " + sunsetTime;
-
   document.getElementsByClassName("city-name")[2].innerHTML = result.name;
+
+  getWeatherForecast(result.name);
+  drawAddedHeart();
 }
 
 //checking for prev. visits
@@ -87,17 +88,20 @@ drawList();
 
 //added locations
 heart.onclick = (e) => {
+  console.log("click");
+  let storedItems = JSON.parse(localStorage.getItem("addedLocationsKey"));
+
   //for the first added location / to remove locations
-  if (!localStorage.getItem("addedLocationsKey")) {
+  if (!storedItems) {
     addedLocation.add(currentCity);
     localStorage.setItem("addedLocationsKey", JSON.stringify(...addedLocation));
     drawList();
     drawAddedHeart();
     return;
-  } else if (JSON.parse(localStorage.getItem("addedLocationsKey")).includes(currentCity)) {
-    let arr = JSON.parse(localStorage.getItem("addedLocationsKey"));
+  } else if (storedItems.includes(currentCity) || storedItems == currentCity) {
+    let arr = storedItems;
     let index = arr.indexOf(currentCity);
-    arr.splice(index, 1);
+    index ? arr.splice(index, 1) : (arr = "");
     localStorage.setItem("addedLocationsKey", JSON.stringify(arr));
     drawList();
     drawAddedHeart();
@@ -105,8 +109,8 @@ heart.onclick = (e) => {
   }
 
   //for the 3+ added location
-  if (Array.isArray(JSON.parse(localStorage.getItem("addedLocationsKey")))) {
-    addedLocation = new Set(JSON.parse(localStorage.getItem("addedLocationsKey"))).add(currentCity);
+  if (Array.isArray(storedItems)) {
+    addedLocation = new Set(storedItems).add(currentCity);
     localStorage.setItem("addedLocationsKey", JSON.stringify(Array.from(addedLocation)));
     drawList();
     drawAddedHeart();
@@ -114,7 +118,7 @@ heart.onclick = (e) => {
   }
 
   //for the second  added location, otherwise cityname will be broken into latters
-  addedLocation = new Set().add(JSON.parse(localStorage.getItem("addedLocationsKey"))).add(currentCity);
+  addedLocation = new Set().add(storedItems).add(currentCity);
   localStorage.setItem("addedLocationsKey", JSON.stringify(Array.from(addedLocation)));
   drawList();
   drawAddedHeart();
@@ -122,16 +126,24 @@ heart.onclick = (e) => {
 
 //draw the added list
 function drawList() {
+  if (!localStorage.getItem("addedLocationsKey")) return;
   let listArray = JSON.parse(localStorage.getItem("addedLocationsKey"));
   const list = document.getElementById("added-location-list");
   list.innerHTML = "";
 
-  listArray.forEach((addedCity) => {
+  if (!Array.isArray(listArray)) {
     let li = document.createElement("li");
-    li.innerHTML = addedCity;
+    li.innerHTML = listArray;
     li.classList.add("pointer");
     list.append(li);
-  });
+  } else {
+    listArray.forEach((addedCity) => {
+      let li = document.createElement("li");
+      li.innerHTML = addedCity;
+      li.classList.add("pointer");
+      list.append(li);
+    });
+  }
 }
 
 //drawing forecast cards
@@ -142,8 +154,6 @@ function drawForecast(result) {
   for (let i = 0; i < 17; i++) {
     arr.push(createCard(result, i));
   }
-
-  console.log(result);
 
   arr.forEach((forecastTime) => {
     let li = document.createElement("li");
@@ -193,33 +203,25 @@ addedLocationsList.onclick = function (e) {
 
 //switch in menu
 menu.onclick = function (e) {
+  document.getElementsByClassName("weather-now")[0].classList.remove("active");
+  document.getElementsByClassName("weather-details")[0].classList.remove("active");
+  document.getElementsByClassName("weather-forecast")[0].classList.remove("active");
+  document.getElementsByClassName("menu-now")[0].classList.remove("menu-active");
+  document.getElementsByClassName("menu-details")[0].classList.remove("menu-active");
+  document.getElementsByClassName("menu-forecast")[0].classList.remove("menu-active");
+
   switch (e.target.parentElement.classList[0]) {
     case "menu-now":
       e.target.parentElement.classList.add("menu-active");
       document.getElementsByClassName("weather-now")[0].classList.add("active");
-
-      document.getElementsByClassName("menu-details")[0].classList.remove("menu-active");
-      document.getElementsByClassName("weather-details")[0].classList.remove("active");
-      document.getElementsByClassName("menu-forecast")[0].classList.remove("menu-active");
-      document.getElementsByClassName("weather-forecast")[0].classList.remove("active");
       break;
     case "menu-details":
       e.target.parentElement.classList.add("menu-active");
       document.getElementsByClassName("weather-details")[0].classList.add("active");
-
-      document.getElementsByClassName("menu-now")[0].classList.remove("menu-active");
-      document.getElementsByClassName("weather-now")[0].classList.remove("active");
-      document.getElementsByClassName("menu-forecast")[0].classList.remove("menu-active");
-      document.getElementsByClassName("weather-forecast")[0].classList.remove("active");
       break;
     case "menu-forecast":
       e.target.parentElement.classList.add("menu-active");
       document.getElementsByClassName("weather-forecast")[0].classList.add("active");
-
-      document.getElementsByClassName("menu-details")[0].classList.remove("menu-active");
-      document.getElementsByClassName("weather-details")[0].classList.remove("active");
-      document.getElementsByClassName("menu-now")[0].classList.remove("menu-active");
-      document.getElementsByClassName("weather-now")[0].classList.remove("active");
       break;
 
     default:
@@ -227,7 +229,5 @@ menu.onclick = function (e) {
   }
 };
 
-drawForecast();
 //поміняти set() на array?
-//пофіксити лайв сервер
-//зробити скролл нормальним на всіх браузерах
+//автоматичний запрос через 2 секунди
