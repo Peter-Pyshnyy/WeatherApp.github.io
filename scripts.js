@@ -4,7 +4,6 @@ const monthNames = ["January", "February", "March", "April", "May", "June", "Jul
 let heart = document.getElementById("heart");
 let addedLocationsList = document.getElementById("added-location-list");
 let currentCity = localStorage.getItem("currentCityKey");
-let addedLocation = new Set();
 
 //getting the forcast information on the city
 function getWeatherForecast(cityName) {
@@ -92,38 +91,21 @@ getWeatherForecast(currentCity);
 
 //added locations
 heart.onclick = (e) => {
-  console.log("click");
   let storedItems = JSON.parse(localStorage.getItem("addedLocationsKey"));
+  let addedLocation = [];
 
-  //for the first added location / to remove locations
   if (!storedItems) {
-    addedLocation.add(currentCity);
-    localStorage.setItem("addedLocationsKey", JSON.stringify(...addedLocation));
-    drawList();
-    drawAddedHeart();
-    return;
-  } else if (storedItems.includes(currentCity) || storedItems == currentCity) {
-    let arr = storedItems;
-    let index = arr.indexOf(currentCity);
-    index ? arr.splice(index, 1) : (arr = "");
-    localStorage.setItem("addedLocationsKey", JSON.stringify(arr));
-    drawList();
-    drawAddedHeart();
-    return;
+    addedLocation.push(currentCity);
+  } else if (!storedItems.includes(currentCity)) {
+    addedLocation = storedItems;
+    addedLocation.push(currentCity);
+  } else {
+    addedLocation = storedItems;
+    let index = addedLocation.indexOf(currentCity);
+    addedLocation.splice(index, 1);
   }
 
-  //for the 3+ added location
-  if (Array.isArray(storedItems)) {
-    addedLocation = new Set(storedItems).add(currentCity);
-    localStorage.setItem("addedLocationsKey", JSON.stringify(Array.from(addedLocation)));
-    drawList();
-    drawAddedHeart();
-    return;
-  }
-
-  //for the second  added location, otherwise cityname will be broken into latters
-  addedLocation = new Set().add(storedItems).add(currentCity);
-  localStorage.setItem("addedLocationsKey", JSON.stringify(Array.from(addedLocation)));
+  localStorage.setItem("addedLocationsKey", JSON.stringify(addedLocation));
   drawList();
   drawAddedHeart();
 };
@@ -135,19 +117,12 @@ function drawList() {
   const list = document.getElementById("added-location-list");
   list.innerHTML = "";
 
-  if (!Array.isArray(listArray)) {
+  listArray.forEach((addedCity) => {
     let li = document.createElement("li");
-    li.innerHTML = listArray;
+    li.innerHTML = addedCity;
     li.classList.add("pointer");
     list.append(li);
-  } else {
-    listArray.forEach((addedCity) => {
-      let li = document.createElement("li");
-      li.innerHTML = addedCity;
-      li.classList.add("pointer");
-      list.append(li);
-    });
-  }
+  });
 }
 
 //drawing forecast cards
@@ -233,5 +208,4 @@ menu.onclick = function (e) {
   }
 };
 
-//поміняти set() на array?
 //автоматичний запрос через 2 секунди

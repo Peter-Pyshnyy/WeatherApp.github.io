@@ -1,0 +1,33 @@
+.left .menu {
+  display: flex;
+  height: 45px;
+  font-size: 18px;
+}
+
+.menu-now {
+  width: 33.3%;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 45px;
+  border-right: 1px solid black;
+}
+
+.menu-details {
+  width: 33.3%;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 45px;
+  border-right: 1px solid black;
+}
+.menu-forecast {
+  width: 33.3%;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 45px;
+}
+
+.menu-active p {
+  background: black;
+  color: white;
+  width: 101%;
+}

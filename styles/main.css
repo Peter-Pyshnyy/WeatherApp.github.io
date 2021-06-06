@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,900");
+
+* {
+  margin: 0;
+  padding: 0%;
+  box-sizing: border-box;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.weather-app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 700px;
+}
+
+.weather-card {
+  width: 600px;
+  height: 436px;
+  border: 1px solid #000000;
+}
+
+.card-body {
+  display: flex;
+  width: 600px;
+}
+
+.card-body .left {
+  width: 100%;
+  height: 390px;
+  max-width: 50%;
+  border-right: 1px solid #000000;
+}
+
+.card-body .right {
+  width: 50%;
+}
+
+ul li {
+  margin-bottom: 13px;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+/* input */
+input {
+  width: 100%;
+  height: 45px;
+  border: none;
+  border-bottom: 1px solid #000000;
+  font-size: 18px;
+  line-height: 21px;
+  padding-left: 16px;
+  color: #696969;
+
+  background-image: url(../img/search-icon.png);
+  background-size: 3.5%;
+  background-repeat: no-repeat;
+  background-position: 560px 10px;
+}
+
+input:focus {
+  outline: none;
+  background-color: rgb(250, 250, 250);
+}
