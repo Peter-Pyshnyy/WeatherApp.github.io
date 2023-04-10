@@ -46,7 +46,7 @@ function handleResult(result) {
 search.addEventListener("keypress", setQuery);
 function setQuery(e) {
   if (e.key == "Enter") {
-    let searchedCity = e.path[0].value;
+    let searchedCity = search.value;
     getWeather(searchedCity);
     this.blur();
   }
