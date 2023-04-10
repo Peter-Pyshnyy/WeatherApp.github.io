@@ -7,7 +7,7 @@ let currentCity = localStorage.getItem("currentCityKey");
 
 //getting the forcast information on the city
 function getWeatherForecast(cityName) {
-  let key = "8d21e705797d0cfd7ff89a2569d925dd";
+  let key = "766aa58cc02c803509c6d555596bbb90";
   let url = "https://api.openweathermap.org";
   fetch(url + "/data/2.5/forecast?q=" + cityName + "&appid=" + key)
     .then((response) => response.json())
